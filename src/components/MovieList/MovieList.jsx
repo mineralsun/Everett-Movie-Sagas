@@ -9,6 +9,8 @@ function MovieList() {
     const dispatch = useDispatch();
     const movies = useSelector(store => store.movies);
 
+    // This function allows the user to navigate to a specific movie page which 
+    // will show the more specific information on the DOM
     const navigateToMovie = (event) => {
         history.push('/movie');
     }
