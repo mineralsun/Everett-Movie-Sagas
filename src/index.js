@@ -30,11 +30,11 @@ function* fetchAllMovies() {
         
 }
 
-function* getFilm(action) {
+function* getFilm() {
     try {
-        const film = yield axios.get(`/api/movie/${action.payload}`);
+        const film = yield axios.get(`/api/movie/:id`);
         console.log(`Got specific film: ${film.id}`)
-        yield put({ type:'GET_FILM', payload: film.data })
+        yield put({ type:'GET_FILM', payload: film.id })
     } catch (error) {
         console.log(`Error in specific movie query`, error)
         alert (`This isn't working :(`)

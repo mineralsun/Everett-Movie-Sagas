@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import Box from '@mui/material/Box';
 import './MovieList.css'
 
 function MovieList() {
@@ -12,7 +15,7 @@ function MovieList() {
     // This function allows the user to navigate to a specific movie page which 
     // will show the more specific information on the DOM
     const navigateToMovie = (event) => {
-        history.push('/movie');
+        history.push('/details');
     }
 
     useEffect(() => {
@@ -22,16 +25,28 @@ function MovieList() {
     return (
         <main>
             <h1>MovieList</h1>
-            <section className="movies">
+            <Grid
+                margin={0}
+                xs={2} md={2}
+                padding={2.7}
+                className="movies"
+            >
                 {movies.map(movie => {
                     return (
+                        <Box
+                            border={2}
+                            padding={4}
+                            margin={1}
+                            borderColor={'black'}
+                        >
                         <div key={movie.id} >
                             <h3>{movie.title}</h3>
                             <img onClick={navigateToMovie} src={movie.poster} alt={movie.title}/>
                         </div>
+                        </Box>
                     );
                 })}
-            </section>
+            </Grid>
         </main>
 
     );

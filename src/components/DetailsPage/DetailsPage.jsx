@@ -7,8 +7,8 @@ function DetailsPage() {
     const dispatch = useDispatch();
     const movies = useSelector(store => store.movies);
 
-    const getFilm = (id) => {
-        dispatch({ type: 'GET_FILM', payload: id });
+    const getFilm = () => {
+        dispatch({ type: 'GET_FILM' });
     }
 
     // This takes user back to home page where the list of movies is
