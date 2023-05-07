@@ -32,7 +32,7 @@ function* fetchAllMovies() {
 
 function* getFilm() {
     try {
-        const film = yield axios.get(`/api/movie/:id`);
+        const film = yield axios.get(`/api/movie/details/:id`);
         console.log(`Got specific film: ${film.id}`)
         yield put({ type:'GET_FILM', payload: film.id })
     } catch (error) {

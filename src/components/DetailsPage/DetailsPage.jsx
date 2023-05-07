@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+
 
 function DetailsPage() {
     const history = useHistory();
     const dispatch = useDispatch();
     const movies = useSelector(store => store.movies);
-
-    const getFilm = () => {
-        dispatch({ type: 'GET_FILM' });
-    }
+    let { id } = useParams();
+    const movie = movies.find((movie) => movie.id === Number(id));
+    console.log(id);
 
     // This takes user back to home page where the list of movies is
     const returnToMovieList = (event) => {
@@ -17,18 +17,22 @@ function DetailsPage() {
     }
 
     useEffect(() => {
-        getFilm();
+        dispatch({ type: 'FETCH_MOVIES' });
     }, []);
 
     return (
         <>
         {
-            movies.map(film => (
-                <div key={film.id}>
-                    <h4>{film.name}</h4>
+            movies.length === 0 ? (
 
+                <div>
+                    Loading...
                 </div>
-            ))
+            ) : (
+                <div key={movie.id}>
+                    <h1>{movie.title}</h1>
+                </div>
+            )
         }
         <button onClick={returnToMovieList}>Home</button>
         </>

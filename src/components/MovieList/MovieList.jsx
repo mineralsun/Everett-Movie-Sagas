@@ -14,8 +14,9 @@ function MovieList() {
 
     // This function allows the user to navigate to a specific movie page which 
     // will show the more specific information on the DOM
-    const navigateToMovie = (event) => {
-        history.push('/details');
+    const navigateToMovie = (id) => {
+        console.log(id);
+        history.push(`/details/${id}`);
     }
 
     useEffect(() => {
@@ -41,7 +42,7 @@ function MovieList() {
                         >
                         <div key={movie.id} >
                             <h3>{movie.title}</h3>
-                            <img onClick={navigateToMovie} src={movie.poster} alt={movie.title}/>
+                            <img onClick={() => navigateToMovie(movie.id)} src={movie.poster} alt={movie.title}/>
                         </div>
                         </Box>
                     );
