@@ -7,6 +7,7 @@ function DetailsPage() {
     const history = useHistory();
     const dispatch = useDispatch();
     const movies = useSelector(store => store.movies);
+    const genres = useSelector(store => store.genres);
     let { id } = useParams();
     const movie = movies.find((movie) => movie.id === Number(id));
     console.log(id);
@@ -18,6 +19,7 @@ function DetailsPage() {
 
     useEffect(() => {
         dispatch({ type: 'FETCH_MOVIES' });
+        dispatch({ type: 'FETCH_GENRES'});
     }, []);
 
     return (
@@ -32,7 +34,7 @@ function DetailsPage() {
                 <div key={movie.id}>
                     <h2>{movie.title}</h2>
                     <img src={movie.poster}></img>
-                    <h4>{movie.genre}</h4>
+                    <h4>{genres}</h4>
                     <p>{movie.description}</p>
                 </div>
             )

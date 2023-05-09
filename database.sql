@@ -79,3 +79,9 @@ VALUES
 (12,6), (12,3),           -- Social Net
 (13,6), (13,10), (13,1),  -- Titanic
 (14,1), (14,2), (14,4);   -- Toy Story
+
+-- This was my test to make sure that I could join the tables and reference the data!
+SELECT "movies"."title", "genres"."name" FROM "movies"
+JOIN "movies_genres" ON "movies_genres"."movie_id" = "movies"."id"
+JOIN "genres" ON "genres"."id" = "movies_genres"."genre_id"
+WHERE "movies"."id" = 1;
