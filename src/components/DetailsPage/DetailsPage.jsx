@@ -30,7 +30,10 @@ function DetailsPage() {
                 </div>
             ) : (
                 <div key={movie.id}>
-                    <h1>{movie.title}</h1>
+                    <h2>{movie.title}</h2>
+                    <img src={movie.poster}></img>
+                    <h4>{movie.genre}</h4>
+                    <p>{movie.description}</p>
                 </div>
             )
         }

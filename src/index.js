@@ -30,6 +30,8 @@ function* fetchAllMovies() {
         
 }
 
+
+
 function* getFilm() {
     try {
         const film = yield axios.get(`/api/movie/details/:id`);
