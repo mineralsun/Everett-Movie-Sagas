@@ -19,7 +19,7 @@ function DetailsPage() {
 
     useEffect(() => {
         dispatch({ type: 'FETCH_MOVIES' });
-        dispatch({ type: 'FETCH_GENRES'});
+        dispatch({ type: 'FETCH_GENRES' });
     }, []);
 
     return (
@@ -34,7 +34,14 @@ function DetailsPage() {
                 <div key={movie.id}>
                     <h2>{movie.title}</h2>
                     <img src={movie.poster}></img>
-                    <h4>{genres}</h4>
+                    <h4>Genres:</h4>
+                    <ul className="genres">
+                        {
+                            genres.map(genre => {
+                                <li>{genre.name}</li>
+                            })
+                        }
+                    </ul>
                     <p>{movie.description}</p>
                 </div>
             )

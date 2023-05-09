@@ -80,7 +80,9 @@ VALUES
 (13,6), (13,10), (13,1),  -- Titanic
 (14,1), (14,2), (14,4);   -- Toy Story
 
--- This was my test to make sure that I could join the tables and reference the data!
+-- This was my test to make sure that 
+-- I could join the tables and reference the data!
+-- I know I don't need movies.title
 SELECT "movies"."title", "genres"."name" FROM "movies"
 JOIN "movies_genres" ON "movies_genres"."movie_id" = "movies"."id"
 JOIN "genres" ON "genres"."id" = "movies_genres"."genre_id"
