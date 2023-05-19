@@ -8,9 +8,10 @@ function DetailsPage() {
     const dispatch = useDispatch();
     const movies = useSelector(store => store.movies);
     const genres = useSelector(store => store.genres);
-    let { id } = useParams();
-    const movie = movies.find((movie) => movie.id === Number(id));
-    console.log(id);
+    const  { movieId } = useParams();
+    // ?? const movie = movies.find((movie) => movie.id === Number(id));
+    const movie = useSelector(store => store.selectedMovie);
+    // console.log(id);
 
     // This takes user back to home page where the list of movies is
     const returnToMovieList = (event) => {
@@ -18,37 +19,30 @@ function DetailsPage() {
     }
 
     useEffect(() => {
-        dispatch({ type: 'FETCH_MOVIES' });
-        dispatch({ type: 'FETCH_GENRES' });
-    }, []);
+        dispatch({ type: 'FETCH_MOVIE_DETAILS', payload: movieId });
+    }, [movieId]);
+
+
+    console.log(movieId);
 
     return (
-        <>
-        {
-            movies.length === 0 ? (
+        <div>
+            <h1>{movieId}</h1>
+            <h2>{movie.title}</h2>
+            <img src={movie.poster}></img>
+            <p>{movie.description}</p>
+            <ul>
+                <h3>Genres:</h3>
+                {
+                    genres.map(genreToDisplay =>
+                        <li>{genreToDisplay.name}</li>
+                    )
+                }
+            </ul>
+            <button onClick={returnToMovieList}>Home</button>
+        </div>
 
-                <div>
-                    Loading...
-                </div>
-            ) : (
-                <div key={movie.id}>
-                    <h2>{movie.title}</h2>
-                    <img src={movie.poster}></img>
-                    <h4>Genres:</h4>
-                    <ul className="genres">
-                        {
-                            genres.map(genre => {
-                                <li>{genre.name}</li>
-                            })
-                        }
-                    </ul>
-                    <p>{movie.description}</p>
-                </div>
-            )
-        }
-        <button onClick={returnToMovieList}>Home</button>
-        </>
-    ) ;
+    );
 }
 
 export default DetailsPage;

@@ -23,6 +23,10 @@ function MovieList() {
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
 
+    const displayMovie = (movieToDisplay) => {
+        history.push(`/details/${movieToDisplay.id}`);
+    }
+
     return (
         <main>
             <h1>MovieList</h1>
@@ -40,9 +44,9 @@ function MovieList() {
                             margin={1}
                             borderColor={'black'}
                         >
-                        <div key={movie.id} >
+                        <div key={movies.id} >
                             <h3>{movie.title}</h3>
-                            <img onClick={() => navigateToMovie(movie.id)} src={movie.poster} alt={movie.title}/>
+                            <img onClick={(event) => displayMovie(movie)} src={movie.poster} alt={movie.title}/>
                         </div>
                         </Box>
                     );

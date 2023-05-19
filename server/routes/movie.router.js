@@ -17,21 +17,35 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  // Add query to get all genres
-  let id = req.params.id;
-  const sqlQuery = `SELECT "genres"."name" FROM "movies"
-  JOIN "movies_genres" ON "movies_genres"."movie_id" = "movies"."id"
-  JOIN "genres" ON "genres"."id" = "movies_genres"."genre_id"
-  WHERE "movies"."id"=$1`;
-  pool.query(sqlQuery, [id])
+  const query = `SELECT * FROM movies WHERE "id"=$1`;
+  pool.query(query, [req.params.id])
     .then(result => {
-      res.send(result.rows);
+      res.send(result.rows[0]);
     })
-    .catch(error => {
-      console.log(`Error in get genres`, error);
+    .catch(err => {
+      console.log('ERROR: Get specific movies', err);
       res.sendStatus(500)
     })
+
 });
+
+
+// router.get('/:id', (req, res) => {
+//   // Add query to get all genres
+//   const query = `SELET * FROM movies WHERE "id"=$1`
+//   const sqlQuery = `SELECT "movies"."*", "genres."."name" AS "genres" FROM movies
+//   // JOIN "movies_genres" ON "movies"."id" = "movies_genres"."movie_id"
+//   // JOIN "genres" ON "movies_genres"."genre_id" = "genres"."id" 
+//   // WHERE "movies"."id"=$1;`;
+//   pool.query(query, [req.params.id])
+//     .then(result => {
+//       res.send(result.rows[0]);
+//     })
+//     .catch(error => {
+//       console.log(`Error in get genres`, error);
+//       res.sendStatus(500)
+//     })
+// });
 
 router.post('/', (req, res) => {
   console.log(req.body);

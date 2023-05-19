@@ -14,8 +14,20 @@ import axios from 'axios';
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
-    // yield takeEvery('GET_FILM', getFilm);
     yield takeEvery('FETCH_GENRES', fetchAllGenres);
+    yield takeEvery('FETCH_MOVIE_DETAILS', fetchMovieDetails);
+}
+
+function* fetchMovieDetails(action) {
+    try {
+        const movie = yield axios.get(`/api/movie/${action.payload}`);
+        yield put({ type: 'SET_MOVIE_DETAILS', payload: movie.data});
+        const genres = yield axios.get(`api/genre/${action.payload}`);
+        yield put({ type: 'SET_GENRES', payload: genres.data})
+    } catch (error) {
+        console.log(error);
+    }
+
 }
 
 function* fetchAllMovies() {
@@ -30,26 +42,17 @@ function* fetchAllMovies() {
         
 }
 
-function* fetchAllGenres() {
+function* fetchAllGenres(action) {
     try {
-        const genres = yield axios.get('/api/genre');
+        const genres = yield axios.get(`/api/genre/:id`);
         console.log('get genres:', genres.data);
-        yield put({ type: 'SET_GENRES', payload: genres.data});
-    } catch {
-        console.log('get genres error')
+        yield put({ type: 'SET_GENRES', payload: genres.data[0]});
+    } catch (error) {
+        console.log('get genres error', error)
     }
 }
 
-// function* getFilm() {
-//     try {
-//         const film = yield axios.get(`/api/movie/details/:id`);
-//         console.log(`Got specific film: ${film.id}`)
-//         yield put({ type:'GET_FILM', payload: film.id })
-//     } catch (error) {
-//         console.log(`Error in specific movie query`, error)
-//         alert (`This isn't working :(`)
-//     }
-// }
+
 
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
@@ -74,11 +77,21 @@ const genres = (state = [], action) => {
     }
 }
 
+const selectedMovie = (state = {}, action) => {
+    switch (action.type) {
+        case 'SET_MOVIE_DETAILS':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 // Create one store that all components can use
 const storeInstance = createStore(
     combineReducers({
         movies,
         genres,
+        selectedMovie,
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
