@@ -24,7 +24,7 @@ function* editMovie(action) {
     try {
         yield axios.put(`/api/movie/${action.payload.id}`, action.payload);
         if (action.history) {
-            action.history.goback();
+            action.history.goBack();
         }
     } catch (e) {
         console.log(e);
