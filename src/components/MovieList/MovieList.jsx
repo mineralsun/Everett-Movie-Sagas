@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
+import { Button } from '@mui/material';
 import './MovieList.css'
 
 function MovieList() {
@@ -27,9 +28,18 @@ function MovieList() {
         history.push(`/details/${movieToDisplay.id}`);
     }
 
+    const navToAddMovie = () => {
+        history.push('/add');
+    }
+
     return (
         <main>
             <h1>MovieList</h1>
+            <Button 
+            variant='contained'
+            onClick={navToAddMovie}>
+                Add a Movie!
+            </Button>
             <Grid
                 margin={0}
                 xs={2} md={2}
