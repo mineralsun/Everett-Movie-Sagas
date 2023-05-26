@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Link } from 'react-router-dom';
 
 
 function DetailsPage() {
@@ -30,6 +30,8 @@ function DetailsPage() {
             <h1>{movieId}</h1>
             <h2>{movie.title}</h2>
             <img src={movie.poster}></img>
+            <br />
+            <Link to={`/edit/${movie.id}`}>Edit</Link>
             <p>{movie.description}</p>
             <ul>
                 <h3>Genres:</h3>

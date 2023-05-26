@@ -16,14 +16,39 @@ function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
     yield takeEvery('FETCH_GENRES', fetchAllGenres);
     yield takeEvery('FETCH_MOVIE_DETAILS', fetchMovieDetails);
+    yield takeEvery('ADD_MOVIE', addMovie);
+    yield takeEvery('EDIT_MOVIE', editMovie);
+}
+
+function* editMovie(action) {
+    try {
+        yield axios.put(`/api/movie/${action.payload.id}`, action.payload);
+        if (action.history) {
+            action.history.goback();
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+function* addMovie(action) {
+    try {
+        yield axios.post('/api/movie', action.payload);
+        if (action.history) {
+            // Redirect back to the movie list
+            action.history.push('/');
+        }
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 function* fetchMovieDetails(action) {
     try {
         const movie = yield axios.get(`/api/movie/${action.payload}`);
-        yield put({ type: 'SET_MOVIE_DETAILS', payload: movie.data});
+        yield put({ type: 'SET_MOVIE_DETAILS', payload: movie.data });
         const genres = yield axios.get(`api/genre/${action.payload}`);
-        yield put({ type: 'SET_GENRES', payload: genres.data})
+        yield put({ type: 'SET_GENRES', payload: genres.data })
     } catch (error) {
         console.log(error);
     }
@@ -39,14 +64,14 @@ function* fetchAllMovies() {
     } catch {
         console.log('get all error');
     }
-        
+
 }
 
 function* fetchAllGenres(action) {
     try {
         const genres = yield axios.get(`/api/genre/:id`);
         console.log('get genres:', genres.data);
-        yield put({ type: 'SET_GENRES', payload: genres.data[0]});
+        yield put({ type: 'SET_GENRES', payload: genres.data[0] });
     } catch (error) {
         console.log('get genres error', error)
     }
@@ -92,6 +117,8 @@ const storeInstance = createStore(
         movies,
         genres,
         selectedMovie,
+        addMovie,
+        editMovie,
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),

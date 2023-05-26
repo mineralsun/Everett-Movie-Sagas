@@ -84,4 +84,17 @@ router.post('/', (req, res) => {
     })
 })
 
+router.put('/:id', (req, res) => {
+  const queryText = `UPDATE "movies" SET "title" = $1, "description" = $2, "poster" = $3
+                     WHERE "id" = $4;`; // AND "user_id" = $5` FOR SOLO PROJECT
+  pool.query(queryText, [req.body.title, req.body.description, req.body.poster, req.params.id])
+    .then((results) => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    })
+})
+
 module.exports = router;

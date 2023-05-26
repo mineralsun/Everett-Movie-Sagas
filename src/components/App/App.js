@@ -2,6 +2,7 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import MovieList from '../MovieList/MovieList'
 import DetailsPage from '../DetailsPage/DetailsPage.jsx';
+import AddMovie from '../AddMovie/AddMovie.jsx';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -13,6 +14,14 @@ function App() {
         <Container fixed>
           <Route path="/" exact>
             <MovieList />
+          </Route>
+
+          <Route exact path ="/add">
+            <AddMovie />
+          </Route>
+
+          <Route exact path="/edit/:id">
+            <AddMovie />
           </Route>
 
           <Route exact path="/details/:movieId">
